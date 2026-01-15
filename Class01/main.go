@@ -3,5 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello World!")
+	sum := func(a int, b int) int {
+		return a + b
+	}
+
+	fmt.Println(sum(3, 2))
 }
