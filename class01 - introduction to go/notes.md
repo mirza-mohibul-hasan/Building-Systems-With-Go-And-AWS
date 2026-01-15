@@ -179,3 +179,115 @@ func main() {
   - `%f` for floats
   - `%v` for any value
   - `\n` for newline in Printf
+
+## Control Flow
+
+### Conditional Statements
+
+#### If-Else
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    age := 21
+
+    if age > 20 && age < 30 {
+        fmt.Println("Young")
+    } else if age < 20 {
+        fmt.Println("Kid")
+    } else {
+        fmt.Println("Old")
+    }
+}
+```
+
+**Key Points:**
+
+- Conditions don't require parentheses
+- Use `&&` (AND), `||` (OR), `!` (NOT) operators
+- Braces are mandatory
+
+#### Switch Statement
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    day := 3
+
+    switch day {
+    case 1:
+        fmt.Println("Monday")
+    case 2:
+        fmt.Println("Tuesday")
+    case 3:
+        fmt.Println("Wednesday")
+    default:
+        fmt.Println("Unknown day")
+    }
+}
+```
+
+**Key Points:**
+
+- No `break` needed (implicit)
+- `default` case executes if no match
+- Can use multiple values: `case 1, 2, 3:`
+
+### Loops
+
+#### For Loop
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    for i := 0; i < 10; i++ {
+        fmt.Println(i)
+    }
+}
+```
+
+#### While Loop (For-based)
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    i := 0
+    for i < 10 {
+        fmt.Println(i)
+        i++
+    }
+}
+```
+
+#### Range Loop
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    numbers := []int{1, 2, 3, 4, 5}
+    for index, value := range numbers {
+        fmt.Println(index, value)
+    }
+}
+```
+
+**Key Points:**
+
+- Go has only `for` loops (no `while`)
+- Use `range` for iterating collections
+- Use `_` to ignore index or value: `for _, value := range numbers`
