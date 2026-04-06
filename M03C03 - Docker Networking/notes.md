@@ -196,4 +196,57 @@ Host networking makes the container use the host's network stack directly.
 - Avoid it when you need service discovery by container name.
 - In those cases, a bridge or custom network is the better choice.
 
+## FE Calls BE
+
+![alt text](image-15.png)
+
+### Recommended approach
+
+Use the container name as the hostname:
+
+http://be:PORT
+
+Example:
+
+http://be:8080
+
+Docker resolves `be` automatically to the container's IP address, so you do not need to remember or hardcode IPs.
+
+### Alternative approach
+
+Use the container IP directly:
+
+http://172.17.0.3:8080
+
+This works, but it is not recommended because the IP can change when the container restarts.
+
+### Why this works
+
+All containers are attached to the same network, such as `172.17.0.0/16`.
+Docker provides internal DNS, so the container name acts like a hostname.
+
+### Example flow
+
+fe → be
+
+curl http://be:8080/api
+
+be → redis
+
+redis://redis:6379
+
+### Important notes
+
+- Do not use `localhost`; it points to the same container.
+- Use the service or container name instead.
+- Make sure both containers are on the same network.
+
+### Summary
+
+| Method             | Works? | Recommended |
+| ------------------ | ------ | ----------- |
+| `http://be:port`   | Yes    | Best        |
+| `http://IP:port`   | Yes    | Avoid       |
+| `http://localhost` | No     | Wrong       |
+
 # Docker Storage
