@@ -160,3 +160,40 @@ docker exec -it <container-name-or-id> sh
 <img src="image-14.png" alt="Docker network summary diagram">
 <figcaption>High-level summary of Docker network modes: host, bridge, and none.</figcaption>
 </figure>
+
+## Host Network - Quick Notes
+
+Host networking makes the container use the host's network stack directly.
+
+- All containers share the same host IP.
+- There is no separate container IP.
+- Containers behave more like processes on the same machine than isolated network endpoints.
+
+### Communication
+
+- Services are reachable through `localhost:<port>` when they bind to `0.0.0.0` or `127.0.0.1`.
+- Containers can talk to each other through `localhost` and a port only because they are all sharing the host network.
+- If a service binds to a specific private interface like `172.x.x.x`, other containers cannot reach it through host networking.
+
+### Ping And Ports
+
+- You cannot rely on pinging a container because there is no unique container IP in host mode.
+- Ports must be unique across containers because they all share the same host port space.
+- If two containers try to use the same port, the second one will fail because of a port conflict.
+
+### Key Idea
+
+- `localhost` is shared across the host and all host-network containers.
+
+### When To Use Host Network
+
+- Use it when you need the lowest networking overhead and the best performance.
+- Use it when you do not need network isolation.
+
+### When Not To Use Host Network
+
+- Avoid it when you need container isolation.
+- Avoid it when you need service discovery by container name.
+- In those cases, a bridge or custom network is the better choice.
+
+# Docker Storage
